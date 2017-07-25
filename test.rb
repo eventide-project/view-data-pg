@@ -1,0 +1,1 @@
+load './test/automated.rb'
