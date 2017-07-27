@@ -11,15 +11,15 @@ module View
             session = Session.get
 
             session.execute(<<~SQL)
-            DROP TABLE IF EXISTS #{Table.name}
+              DROP TABLE IF EXISTS #{Table.name}
             SQL
 
             session.execute(<<~SQL)
-            CREATE TABLE #{Table.name} (
-              id UUID PRIMARY KEY,
-              number INTEGER NOT NULL,
-              other_column TEXT
-            )
+              CREATE TABLE #{Table.name} (
+                id UUID PRIMARY KEY,
+                number INTEGER NOT NULL,
+                other_column TEXT
+              )
             SQL
           end
         end

@@ -12,19 +12,19 @@ module View
               session = Session.get
 
               session.execute(<<~SQL)
-              DROP TABLE IF EXISTS #{Table.name}
+                DROP TABLE IF EXISTS #{Table.name}
               SQL
 
               column_names = CompositePrimaryKey.column_names
 
               session.execute(<<~SQL)
-              CREATE TABLE #{Table.name} (
-                #{column_names[0]} UUID NOT NULL,
-                #{column_names[1]} UUID NOT NULL,
-                number INTEGER NOT NULL,
-                other_column TEXT,
-                PRIMARY KEY(#{column_names[0]}, #{column_names[1]})
-              )
+                CREATE TABLE #{Table.name} (
+                  #{column_names[0]} UUID NOT NULL,
+                  #{column_names[1]} UUID NOT NULL,
+                  number INTEGER NOT NULL,
+                  other_column TEXT,
+                  PRIMARY KEY(#{column_names[0]}, #{column_names[1]})
+                )
               SQL
             end
           end
