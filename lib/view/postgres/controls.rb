@@ -1,5 +1,10 @@
-module View
-  module Postgres
-    Controls = Module.new
-  end
-end
+require 'identifier/uuid/controls'
+
+require 'view/postgres/controls/commands'
+require 'view/postgres/controls/composite_primary_key'
+require 'view/postgres/controls/composite_primary_key/commands'
+require 'view/postgres/controls/composite_primary_key/table'
+require 'view/postgres/controls/id'
+require 'view/postgres/controls/row/get'
+require 'view/postgres/controls/row/put'
+require 'view/postgres/controls/table'

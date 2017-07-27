@@ -9,4 +9,6 @@ require 'test_bench'; TestBench.activate
 
 require 'view/postgres/controls'
 
+View::Postgres.activate
+
 Controls = View::Postgres::Controls
