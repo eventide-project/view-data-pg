@@ -7,7 +7,7 @@ context "Handle Commands" do
 
       delete = Controls::Commands::Delete.example(primary_key: id)
 
-      handler = View::Postgres::Handlers::Commands::Delete.build
+      handler = View::Postgres::Handlers::Commands.build
 
       handler.(delete)
 

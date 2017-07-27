@@ -10,7 +10,7 @@ context "Handle Commands" do
       update = Controls::Commands::Update.example(primary_key: id)
       refute(update.data[:number] == 11)
 
-      handler = View::Postgres::Handlers::Commands::Update.build
+      handler = View::Postgres::Handlers::Commands.build
 
       handler.(update)
 

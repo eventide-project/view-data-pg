@@ -10,7 +10,7 @@ context "Handle Commands" do
       insert = Controls::Commands::Insert.example(primary_key: id)
       refute(insert.data[:number] == 11)
 
-      handler = View::Postgres::Handlers::Commands::Insert.build
+      handler = View::Postgres::Handlers::Commands.build
 
       handler.(insert)
 

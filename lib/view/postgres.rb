@@ -5,8 +5,8 @@ require 'view/postgres/settings'
 
 require 'view/postgres/messages/commands'
 
-require 'view/postgres/handlers/commands/delete'
-require 'view/postgres/handlers/commands/insert'
-require 'view/postgres/handlers/commands/update'
+require 'view/postgres/primary_key/get_columns'
+
+require 'view/postgres/handlers/commands'
 
 require 'view/postgres/postgres'

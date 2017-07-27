@@ -7,7 +7,7 @@ context "Handle Commands" do
 
       update = Controls::Commands::Update.example(primary_key: id)
 
-      handler = View::Postgres::Handlers::Commands::Update.build
+      handler = View::Postgres::Handlers::Commands.build
 
       handler.(update)
 

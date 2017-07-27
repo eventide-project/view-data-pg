@@ -6,7 +6,7 @@ context "Handle Commands" do
       id = Identifier::UUID::Random.get
       insert = Controls::Commands::Insert.example(primary_key: id)
 
-      handler = View::Postgres::Handlers::Commands::Insert.build
+      handler = View::Postgres::Handlers::Commands.build
 
       handler.(insert)
 
