@@ -1,8 +1,8 @@
-module View
-  module Postgres
+module ViewData
+  module PG
     class Settings < MessageStore::Postgres::Settings
       def self.data_source
-        'settings/view_postgres.json'
+        'settings/view_data_pg.json'
       end
     end
   end

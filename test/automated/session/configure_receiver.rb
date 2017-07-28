@@ -5,19 +5,19 @@ context "Session" do
     context "Session Not Given" do
       receiver = OpenStruct.new
 
-      View::Postgres::Session.configure(receiver)
+      ViewData::PG::Session.configure(receiver)
 
       test "New session is set on receiver" do
-        assert(receiver.session.instance_of?(MessageStore::Postgres::Session))
+        assert(receiver.session.instance_of?(ViewData::PG::Session))
       end
     end
 
     context "Session Given" do
-      session = View::Postgres::Session.get
+      session = ViewData::PG::Session.build
 
       receiver = OpenStruct.new
 
-      View::Postgres::Session.configure(receiver, session: session)
+      ViewData::PG::Session.configure(receiver, session: session)
 
       test "Sets the given session on receiver" do
         assert(receiver.session.equal?(session))
@@ -27,10 +27,10 @@ context "Session" do
     context "Alternate Attribute Name Is Given" do
       receiver = OpenStruct.new
 
-      View::Postgres::Session.configure(receiver, attr_name: :some_attr)
+      ViewData::PG::Session.configure(receiver, attr_name: :some_attr)
 
       test "Sets the given attribute, not `session'" do
-        assert(receiver.some_attr.instance_of?(MessageStore::Postgres::Session))
+        assert(receiver.some_attr.instance_of?(ViewData::PG::Session))
         assert(receiver.session.nil?)
       end
     end

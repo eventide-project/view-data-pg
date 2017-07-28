@@ -7,8 +7,6 @@ require_relative '../init.rb'
 
 require 'test_bench'; TestBench.activate
 
-require 'view/postgres/controls'
+require 'view_data/pg/controls'
 
-View::Postgres.activate
-
-Controls = View::Postgres::Controls
+Controls = ViewData::PG::Controls
