@@ -24,7 +24,10 @@ module ViewData
                 some_double_precision double precision,
                 some_smallserial smallserial,
                 some_serial serial,
-                some_bigserial bigserial
+                some_bigserial bigserial,
+
+                -- Money
+                some_money money
               )
             SQL
 

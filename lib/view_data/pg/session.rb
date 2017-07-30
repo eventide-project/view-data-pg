@@ -37,17 +37,9 @@ module ViewData
 
         type_map_for_queries = ::PG::BasicTypeMapForQueries.new(connection)
 
-        type_map_for_queries[Float] = FloatEncoder.new
-
         connection.type_map_for_queries = type_map_for_queries
 
         connection
-      end
-
-      class FloatEncoder < ::PG::TextDecoder::Float
-        def encode(float)
-          float.to_s
-        end
       end
     end
   end
