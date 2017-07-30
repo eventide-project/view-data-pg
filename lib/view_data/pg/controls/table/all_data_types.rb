@@ -61,7 +61,10 @@ module ViewData
                 some_boolean bool,
 
                 -- Enum
-                some_enum some_enum_type
+                some_enum some_enum_type,
+
+                -- UUID
+                some_uuid uuid
               )
             SQL
 
