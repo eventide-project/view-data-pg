@@ -7,7 +7,7 @@ module ViewData
             session = Session.build
 
             if drop
-              session.execute("DROP TABLE IF EXISTS all_data_types")
+              session.execute("DROP TABLE IF EXISTS #{name}")
               session.execute("DROP TYPE some_enum_type")
             end
 
@@ -22,7 +22,7 @@ module ViewData
             end
 
             session.execute(<<~SQL)
-              CREATE TABLE all_data_types (
+              CREATE TABLE #{name} (
                 id uuid PRIMARY KEY,
 
                 -- Numbers
@@ -73,6 +73,10 @@ module ViewData
             SQL
 
             session.close
+          end
+
+          def self.name
+            'all_data_types'
           end
         end
       end
