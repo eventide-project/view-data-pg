@@ -32,7 +32,10 @@ module ViewData
                 -- Character
                 some_varchar_3 character varying(3),
                 some_char_3 character(3),
-                some_text text
+                some_text text,
+
+                -- Binary
+                some_bytea bytea
               )
             SQL
 
