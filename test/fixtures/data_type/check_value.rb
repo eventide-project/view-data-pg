@@ -3,10 +3,12 @@ module Fixtures
     class CheckValue
       include TestBench::Fixture
 
-      initializer :column, :value
+      initializer :column, :value, :result_value
 
-      def self.call(column:, value:)
-        instance = new(column, value)
+      def self.call(column:, value:, result_value: nil)
+        result_value ||= value
+
+        instance = new(column, value, result_value)
         instance.()
       end
 
@@ -31,10 +33,10 @@ module Fixtures
 
             row = result.to_a.fetch(0)
 
-            test "Value (#{value.inspect}) is returned" do
+            test "Value (#{result_value.inspect}) is returned" do
               comment "Value returned: #{row['value'].inspect}"
 
-              assert(row['value'] == value)
+              assert(row['value'] == result_value)
             end
           end
         end

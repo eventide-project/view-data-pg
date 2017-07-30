@@ -26,12 +26,28 @@ module ViewData
           :name => 'regproc'
         })
 
+        numeric_decoder = ::PG::TextDecoder::Float.new({
+          :oid => 1700,
+          :name => 'numeric'
+        })
+
         type_map_for_results.add_coder(name_decoder)
         type_map_for_results.add_coder(regproc_decoder)
+        type_map_for_results.add_coder(numeric_decoder)
 
-        connection.type_map_for_queries = ::PG::BasicTypeMapForQueries.new(connection)
+        type_map_for_queries = ::PG::BasicTypeMapForQueries.new(connection)
+
+        type_map_for_queries[Float] = FloatEncoder.new
+
+        connection.type_map_for_queries = type_map_for_queries
 
         connection
+      end
+
+      class FloatEncoder < ::PG::TextDecoder::Float
+        def encode(float)
+          float.to_s
+        end
       end
     end
   end

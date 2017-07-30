@@ -18,7 +18,7 @@ module Fixtures
         context "Insert #{value.inspect}" do
           insert_proc = proc {
             session.execute(
-              %{INSERT INTO all_data_types (id, some_smallint) VALUES ($1, $2)},
+              %{INSERT INTO all_data_types (id, #{column}) VALUES ($1, $2)},
               [id, value]
             )
           }
