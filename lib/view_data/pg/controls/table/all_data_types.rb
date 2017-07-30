@@ -8,6 +8,17 @@ module ViewData
 
             if drop
               session.execute("DROP TABLE IF EXISTS all_data_types")
+              session.execute("DROP TYPE some_enum_type")
+            end
+
+            begin
+              session.execute(<<~SQL)
+                CREATE TYPE some_enum_type AS ENUM (
+                  '#{Enum.example}',
+                  '#{Enum.alternate}'
+                  )
+              SQL
+            rescue ::PG::DuplicateObject
             end
 
             session.execute(<<~SQL)
@@ -47,7 +58,10 @@ module ViewData
                 some_interval_second_3 interval SECOND(3),
 
                 -- Boolean
-                some_boolean bool
+                some_boolean bool,
+
+                -- Enum
+                some_enum some_enum_type
               )
             SQL
 
