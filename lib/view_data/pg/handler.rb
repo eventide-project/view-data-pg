@@ -2,6 +2,8 @@ module ViewData
   module PG
     class Handler
       include Messaging::Handle
+      include Log::Dependency
+
       include ViewData::Messages
 
       dependency :session, MessageStore::Postgres::Session
@@ -14,6 +16,8 @@ module ViewData
 
       handle Create do |create|
         table_name = create.name
+
+        logger.trace { "Inserting row (Table: #{table_name}, Identifier: #{create.identifier.inspect})" }
 
         pkey_columns = get_primary_key_columns.(table_name)
         pkey_values = Array(create.identifier)
@@ -36,12 +40,19 @@ module ViewData
 
         begin
           session.execute(statement, values)
+
+          logger.info { "Inserted row (Table: #{table_name}, Identifier: #{create.identifier.inspect})" }
+          logger.info(tag: :data) { "SQL: #{statement}" }
+          logger.info(tag: :data) { values.pretty_inspect }
+
         rescue ::PG::UniqueViolation
         end
       end
 
       handle Update do |update|
         table_name = update.name
+
+        logger.trace { "Updating row (Table: #{table_name}, Identifier: #{update.identifier.inspect})" }
 
         pkey_columns = get_primary_key_columns.(table_name)
         pkey_values = Array(update.identifier)
@@ -70,10 +81,16 @@ module ViewData
         SQL
 
         session.execute(statement, values)
+
+        logger.info { "Updated row (Table: #{table_name}, Identifier: #{update.identifier.inspect})" }
+        logger.info(tag: :data) { "SQL: #{statement}" }
+        logger.info(tag: :data) { values.pretty_inspect }
       end
 
       handle Delete do |delete|
         table_name = delete.name
+
+        logger.trace { "Deleting row (Table: #{table_name}, Identifier: #{delete.identifier.inspect})" }
 
         pkey_columns = get_primary_key_columns.(table_name)
         pkey_values = Array(delete.identifier)
@@ -90,6 +107,10 @@ module ViewData
         SQL
 
         session.execute(statement, pkey_values)
+
+        logger.info { "Updated row (Table: #{table_name}, Identifier: #{delete.identifier.inspect})" }
+        logger.info(tag: :data) { "SQL: #{statement}" }
+        logger.info(tag: :data) { pkey_values.pretty_inspect }
       end
     end
   end
