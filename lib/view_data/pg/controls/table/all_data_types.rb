@@ -27,7 +27,12 @@ module ViewData
                 some_bigserial bigserial,
 
                 -- Money
-                some_money money
+                some_money money,
+
+                -- Character
+                some_varchar_3 character varying(3),
+                some_char_3 character(3),
+                some_text text
               )
             SQL
 
