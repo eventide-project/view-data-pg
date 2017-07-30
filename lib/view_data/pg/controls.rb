@@ -1,7 +1,4 @@
 require 'view_data/controls'
 
-module ViewData
-  module PG
-    Controls = Module.new
-  end
-end
+require 'view_data/pg/controls/id'
+require 'view_data/pg/controls/table/all_data_types'
