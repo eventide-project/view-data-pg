@@ -9,12 +9,6 @@ context "Data Types" do
 
     Fixtures::DataType::CheckValue.(
       column: 'some_boolean',
-      value: nil,
-      result_value: false
-    )
-
-    Fixtures::DataType::CheckValue.(
-      column: 'some_boolean',
       value: true
     )
   end
