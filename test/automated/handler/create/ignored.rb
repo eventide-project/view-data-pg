@@ -8,7 +8,7 @@ context "Handler" do
       value = SecureRandom.hex(7)
 
       command = Controls::Commands::Create.example(
-        identifier: id,
+        primary_key: id,
         column_value: value
       )
 

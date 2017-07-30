@@ -5,7 +5,7 @@ context "Handler" do
     context "Ignored" do
       id = Controls::PrimaryKey::UUID.example
 
-      command = Controls::Commands::Delete.example(identifier: id)
+      command = Controls::Commands::Delete.example(primary_key: id)
 
       handler = ViewData::PG::Handler.build
       handler.(command)
