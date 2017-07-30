@@ -44,7 +44,10 @@ module ViewData
                 some_time_3 time(3) without time zone,
                 some_time_3_with_tz time(3) with time zone,
                 some_interval_year interval YEAR,
-                some_interval_second_3 interval SECOND(3)
+                some_interval_second_3 interval SECOND(3),
+
+                -- Boolean
+                some_boolean bool
               )
             SQL
 
