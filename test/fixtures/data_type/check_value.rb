@@ -5,8 +5,8 @@ module Fixtures
 
       initializer :column, :value, :result_value
 
-      def self.call(column:, value:, result_value: nil)
-        result_value ||= value
+      def self.call(column:, value:, result_value: :none)
+        result_value = value if result_value == :none
 
         instance = new(column, value, result_value)
         instance.()

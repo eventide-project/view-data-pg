@@ -64,7 +64,11 @@ module ViewData
                 some_enum some_enum_type,
 
                 -- UUID
-                some_uuid uuid
+                some_uuid uuid,
+
+                -- JSON
+                some_json_text json,
+                some_json_binary jsonb
               )
             SQL
 
