@@ -12,3 +12,5 @@ require 'view_data/pg/controls'
 require_relative './fixtures/fixtures_init'
 
 Controls = ViewData::PG::Controls
+
+ENV['TZ'] ||= Controls::Time::Local::Offset.name

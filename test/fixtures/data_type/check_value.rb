@@ -17,6 +17,8 @@ module Fixtures
 
         session = ViewData::PG::Session.build
 
+        session.execute("SET TIME ZONE UTC")
+
         context "Insert #{value}" do
           session.execute(
             %{INSERT INTO all_data_types (id, #{column}) VALUES ($1, $2)},

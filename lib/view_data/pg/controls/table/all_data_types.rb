@@ -35,7 +35,16 @@ module ViewData
                 some_text text,
 
                 -- Binary
-                some_bytea bytea
+                some_bytea bytea,
+
+                -- Date/Time
+                some_timestamp_3 timestamp(3) without time zone,
+                some_timestamp_3_with_tz timestamp(3) with time zone,
+                some_date date,
+                some_time_3 time(3) without time zone,
+                some_time_3_with_tz time(3) with time zone,
+                some_interval_year interval YEAR,
+                some_interval_second_3 interval SECOND(3)
               )
             SQL
 
