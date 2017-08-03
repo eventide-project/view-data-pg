@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name = 'evt-view_data-pg'
-  s.version = '0.0.0.0'
-  s.summary = 'Populate Postgres view databases from event streams'
+  s.version = '0.1.0.0'
+  s.summary = 'Create and populate PostgreSQL view databases from event streams'
   s.description = ' '
 
   s.authors = ['The Eventide Project']
