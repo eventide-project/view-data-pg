@@ -8,5 +8,3 @@ require 'view_data/pg/settings'
 require 'view_data/pg/primary_key/get_columns'
 
 require 'view_data/pg/handler'
-
-require 'view_data/pg/consumer'

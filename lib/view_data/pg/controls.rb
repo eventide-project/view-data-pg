@@ -3,6 +3,7 @@ require 'clock/controls'
 
 require 'view_data/pg/controls/id'
 require 'view_data/pg/controls/commands'
+require 'view_data/pg/controls/consumer'
 require 'view_data/pg/controls/data'
 require 'view_data/pg/controls/date'
 require 'view_data/pg/controls/enum'
