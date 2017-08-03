@@ -33,12 +33,16 @@ module ViewData
           "$#{i + 1}"
         end
 
-        statement = <<~SQL
+        statement = <<~SQL.chomp
           INSERT INTO #{table_name} (#{columns * ', '})
           VALUES (#{values_clause * ', '})
         SQL
 
         begin
+          logger.trace { "Inserting row (Table: #{table_name}, Identifier: #{create.identifier.inspect})" }
+          logger.trace(tag: :data) { "SQL: #{statement}" }
+          logger.trace(tag: :data) { values.pretty_inspect }
+
           session.execute(statement, values)
 
           logger.info { "Inserted row (Table: #{table_name}, Identifier: #{create.identifier.inspect})" }
@@ -74,11 +78,15 @@ module ViewData
 
         values = data_values + pkey_values
 
-        statement = <<~SQL
+        statement = <<~SQL.chomp
           UPDATE #{table_name}
           SET #{set_clause * ', '}
           WHERE #{pkey_clause * ' AND '}
         SQL
+
+        logger.trace { "Updating row (Table: #{table_name}, Identifier: #{update.identifier.inspect})" }
+        logger.trace(tag: :data) { "SQL: #{statement}" }
+        logger.trace(tag: :data) { values.pretty_inspect }
 
         session.execute(statement, values)
 
@@ -101,14 +109,18 @@ module ViewData
           "#{column_name} = $#{reference}"
         end
 
-        statement = <<~SQL
+        statement = <<~SQL.chomp
           DELETE FROM #{table_name}
           WHERE #{pkey_clause * ' AND '}
         SQL
 
+        logger.trace { "Deleting row (Table: #{table_name}, Identifier: #{delete.identifier.inspect})" }
+        logger.trace(tag: :data) { "SQL: #{statement}" }
+        logger.trace(tag: :data) { pkey_values.pretty_inspect }
+
         session.execute(statement, pkey_values)
 
-        logger.info { "Updated row (Table: #{table_name}, Identifier: #{delete.identifier.inspect})" }
+        logger.info { "Deleted row (Table: #{table_name}, Identifier: #{delete.identifier.inspect})" }
         logger.info(tag: :data) { "SQL: #{statement}" }
         logger.info(tag: :data) { pkey_values.pretty_inspect }
       end
