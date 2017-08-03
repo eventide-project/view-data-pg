@@ -1,3 +1,3 @@
 source ./library-symlinks.sh
 
-symlink_lib 'postgres' 'view'
+symlink_lib 'pg' 'view_data'
