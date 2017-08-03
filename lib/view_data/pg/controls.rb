@@ -1,4 +1,4 @@
-require 'view_data/controls'
+require 'view_data/commands/controls'
 require 'clock/controls'
 
 require 'view_data/pg/controls/id'

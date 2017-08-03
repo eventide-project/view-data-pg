@@ -4,7 +4,7 @@ module ViewData
       include Messaging::Handle
       include Log::Dependency
 
-      include ViewData::Messages
+      include ViewData::Commands
 
       dependency :session, MessageStore::Postgres::Session
       dependency :get_primary_key_columns, PrimaryKey::GetColumns

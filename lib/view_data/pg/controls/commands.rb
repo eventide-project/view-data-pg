@@ -8,7 +8,7 @@ module ViewData
             table ||= Table.name
             data = Data.example(column_value: column_value)
 
-            ViewData::Controls::Messages::Create.example(
+            ViewData::Commands::Controls::Create.example(
               name: table,
               identifier: primary_key,
               data: data
@@ -22,7 +22,7 @@ module ViewData
             table ||= Table.name
             data = Data.example(column_value: column_value)
 
-            ViewData::Controls::Messages::Update.example(
+            ViewData::Commands::Controls::Update.example(
               name: table,
               identifier: primary_key,
               data: data
@@ -35,7 +35,7 @@ module ViewData
             primary_key ||= PrimaryKey::UUID.example
             table ||= Table.name
 
-            ViewData::Controls::Messages::Delete.example(
+            ViewData::Commands::Controls::Delete.example(
               name: table,
               identifier: primary_key
             )

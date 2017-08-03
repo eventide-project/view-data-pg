@@ -1,5 +1,5 @@
 require 'consumer/postgres'
-require 'view_data'
+require 'view_data/commands'
 
 require 'view_data/pg/log'
 require 'view_data/pg/session'
