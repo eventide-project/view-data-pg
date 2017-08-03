@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.4.0'
 
   s.add_runtime_dependency 'evt-consumer-postgres'
-  #s.add_runtime_dependency 'evt-view_data'
+  s.add_runtime_dependency 'evt-view_data-commands'
 
   s.add_development_dependency 'test_bench'
 end
