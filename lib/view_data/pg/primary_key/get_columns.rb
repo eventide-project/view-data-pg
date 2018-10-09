@@ -3,6 +3,7 @@ module ViewData
     module PrimaryKey
       class GetColumns
         Configure.activate(self)
+        Dependency.activate(self)
 
         configure :get_primary_key_columns
 
