@@ -3,6 +3,8 @@ module Fixtures
     class InsertRaisesError
       include TestBench::Fixture
 
+      Initializer.activate(self)
+
       initializer :error_class, :column, :value
 
       def self.call(error_class, column:, value:)

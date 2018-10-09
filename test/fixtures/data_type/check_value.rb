@@ -3,6 +3,8 @@ module Fixtures
     class CheckValue
       include TestBench::Fixture
 
+      Initializer.activate(self)
+
       initializer :column, :value, :result_value
 
       def self.call(column:, value:, result_value: :none)
