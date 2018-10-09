@@ -2,6 +2,8 @@ module ViewData
   module PG
     module PrimaryKey
       class GetColumns
+        Configure.activate(self)
+
         configure :get_primary_key_columns
 
         dependency :session, Session
