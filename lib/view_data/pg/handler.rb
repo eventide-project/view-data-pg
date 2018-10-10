@@ -6,7 +6,7 @@ module ViewData
 
       include ViewData::Commands
 
-      dependency :session, MessageStore::Postgres::Session
+      dependency :session, Session
       dependency :get_primary_key_columns, PrimaryKey::GetColumns
 
       def configure
