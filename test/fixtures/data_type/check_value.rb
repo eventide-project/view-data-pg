@@ -2,8 +2,7 @@ module Fixtures
   module DataType
     class CheckValue
       include TestBench::Fixture
-
-      Initializer.activate(self)
+      include Initializer
 
       initializer :column, :value, :result_value
 

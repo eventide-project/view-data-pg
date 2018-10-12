@@ -2,8 +2,7 @@ module Fixtures
   module DataType
     class InsertRaisesError
       include TestBench::Fixture
-
-      Initializer.activate(self)
+      include Initializer
 
       initializer :error_class, :column, :value
 
