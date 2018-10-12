@@ -8,7 +8,7 @@ module ViewData
 
             if drop
               session.execute("DROP TABLE IF EXISTS #{name}")
-              session.execute("DROP TYPE some_enum_type")
+              session.execute("DROP TYPE IF EXISTS some_enum_type")
             end
 
             begin
