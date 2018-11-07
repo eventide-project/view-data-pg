@@ -27,6 +27,10 @@ module ViewData
 
         columns = pkey_columns + data_columns
 
+        quoted_columns = columns.map do |column|
+          double_quote(column)
+        end
+
         values = pkey_values + data_values
 
         values_clause = values.count.times.map do |i|
@@ -34,7 +38,7 @@ module ViewData
         end
 
         statement = <<~SQL.chomp
-          INSERT INTO #{table_name} (#{columns * ', '})
+          INSERT INTO #{double_quote(table_name)} (#{quoted_columns * ', '})
           VALUES (#{values_clause * ', '})
         SQL
 
@@ -64,22 +68,26 @@ module ViewData
         data_columns = update.data.keys
         data_values = update.data.values
 
-        set_clause = data_columns.map.with_index do |column_name, index|
+        set_clause = data_columns.map.with_index do |column, index|
+          quoted_column = double_quote(column)
+
           reference = index + 1
 
-          "#{column_name} = $#{reference}"
+          "#{quoted_column} = $#{reference}"
         end
 
-        pkey_clause = pkey_columns.map.with_index do |column_name, index|
+        pkey_clause = pkey_columns.map.with_index do |column, index|
+          quoted_column = double_quote(column)
+
           reference = index + data_columns.count + 1
 
-          "#{column_name} = $#{reference}"
+          "#{quoted_column} = $#{reference}"
         end
 
         values = data_values + pkey_values
 
         statement = <<~SQL.chomp
-          UPDATE #{table_name}
+          UPDATE #{double_quote(table_name)}
           SET #{set_clause * ', '}
           WHERE #{pkey_clause * ' AND '}
         SQL
@@ -103,14 +111,16 @@ module ViewData
         pkey_columns = get_primary_key_columns.(table_name)
         pkey_values = Array(delete.identifier)
 
-        pkey_clause = pkey_columns.map.with_index do |column_name, index|
+        pkey_clause = pkey_columns.map.with_index do |column, index|
+          quoted_column = double_quote(column)
+
           reference = index + 1
 
-          "#{column_name} = $#{reference}"
+          "#{quoted_column} = $#{reference}"
         end
 
         statement = <<~SQL.chomp
-          DELETE FROM #{table_name}
+          DELETE FROM #{double_quote(table_name)}
           WHERE #{pkey_clause * ' AND '}
         SQL
 
@@ -123,6 +133,10 @@ module ViewData
         logger.info { "Deleted row (Table: #{table_name}, Identifier: #{delete.identifier.inspect})" }
         logger.info(tag: :data) { "SQL: #{statement}" }
         logger.info(tag: :data) { pkey_values.pretty_inspect }
+      end
+
+      def double_quote(text)
+        "\"#{text}\""
       end
     end
   end
