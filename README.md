@@ -4,7 +4,7 @@ General library for constructing a "view" table in postgres from eventide events
 
 ## What is a "view"?
 
-The term "view" in "view data" is referring to the concept of a [materialized view](https://en.wikipedia.org/wiki/Materialized_view). There are certain tasks which are hard to accomplish with the key storage nature of stream storage. A common (ubiquitous?) example would be rendering a sophisticated user interface. However, these data views are not limited to just that use case. Any time a service would require data to be in a different shape (tabular, relational, etc) view data can be considered.
+The term "view" in "view data" is referring to the concept of a [materialized view](https://en.wikipedia.org/wiki/Materialized_view). There are certain tasks which are hard to accomplish with the key storage nature of message streams. A common (ubiquitous?) example would be rendering a sophisticated user interface. However, these data views are not limited to just that use case. Any time a service would require data to be in a different shape (tabular, relational, etc) view data can be considered.
 
 ### View Data
 
@@ -30,7 +30,7 @@ These commands have the following fields:
 
 A familiarity with the general structure of an eventide component is assumed. If not, please refer to the documentation here http://docs.eventide-project.org
 
-```
+```ruby
 # Define a handler for the stream you wish to update your view data
 module MyDataComponent
   module Handlers
@@ -152,7 +152,7 @@ end
  1. Idempotence is achieved partially via primary key constraints. Be sure to have a primary key with the name `id` on your table. It is by far the path of least resistence for the primary key to match an identifier on the event in question
  1. It is frequently important to know when a field is updated in an eventually consistent system. Maintaining a timestamp for updates is strongly recommended.
  1. It is quite important to specify a custom identifier for any secondary consumer of an event stream.
- 1. View Data is quite important, often vitally important. But be sure you are not reaching for it due to familiarity with relational data. Event stream storage is recommended in most cases of operational code, unnecessary usage of view data will result in increased latency, as well as increased complexity.
+ 1. View Data is quite important, often vitally important. Be sure you are not reaching for it purely due to familiarity with relational data. Event stream storage is recommended in most cases of operational code, unnecessary usage of view data will result in increased latency, as well as increased complexity.
 
 
 ## License
