@@ -2,9 +2,9 @@
 
 General library for constructing a "view" table in postgres from eventide events
 
-## What is a "view"?
+## What is a "View"?
 
-The term "view" in "view data" is referring to the concept of a [materialized view](https://en.wikipedia.org/wiki/Materialized_view). There are certain tasks which are hard to accomplish with the key storage nature of message streams. A common (ubiquitous?) example would be rendering a sophisticated user interface. However, these data views are not limited to just that use case. Any time a service would require data to be in a different shape (tabular, relational, etc) view data can be considered.
+The term "view" in "view data" is referring to the concept of a [materialized view](https://en.wikipedia.org/wiki/Materialized_view). There are certain tasks which are hard to accomplish with the key storage nature of message streams. A common example would be rendering a user interface for a system built on an evented, service-oriented architecture. However, these data views are not limited to just that use case. Any time a service would require data to be in a different shape (tabular, relational, graph, etc) view data can be considered.
 
 ### View Data
 
@@ -50,14 +50,16 @@ module MyDataComponent
 
       category :my_data
 
-      TABLE = 'my_table'
+      def table
+        'my_table'
+      end
 
       handle Added do |added|
         id = added.account_id
         create = ViewData::Commands::Create.build
 
         create.identifier = id
-        create.name = TABLE
+        create.name = table
         create.data = {
           name: added.name,
           currency: added.currency,
@@ -73,7 +75,7 @@ module MyDataComponent
         update = ViewData::Commands::Update.build
 
         update.identifier = id
-        update.name = TABLE
+        update.name = table
         update.data = {
           name: renamed.name,
           updated_at: clock.now
@@ -87,7 +89,7 @@ module MyDataComponent
         update = ViewData::Commands::Update.build
 
         update.identifier = id
-        update.name = TABLE
+        update.name = table
         update.data = {
           enabled: true,
           updated_at: clock.now
@@ -101,7 +103,7 @@ module MyDataComponent
         update = ViewData::Commands::Update.build
 
         update.identifier = id
-        update.name = TABLE
+        update.name = table
         update.data = {
           enabled: false
         }
@@ -149,11 +151,8 @@ end
 
 ## Considerations
 
- 1. Idempotence is achieved partially via primary key constraints. Be sure to have a primary key with the name `id` on your table. It is by far the path of least resistence for the primary key to match an identifier on the event in question
- 1. It is frequently important to know when a field is updated in an eventually consistent system. Maintaining a timestamp for updates is strongly recommended.
- 1. It is quite important to specify a custom identifier for any secondary consumer of an event stream.
- 1. View Data is quite important, often vitally important. Be sure you are not reaching for it purely due to familiarity with relational data. Event stream storage is recommended in most cases of operational code, unnecessary usage of view data will result in increased latency, as well as increased complexity.
-
+- View data's primary use is in display, reporting, and analytics. It shouldn't be accessed by service logic, otherwise business logic decisions may be based on data that is already out of date.
+- Idempotence is a consideration when processing event streams for the purposes of updating view data. The techniques typically used in service development are applicable in view data applications.
 
 ## License
 
