@@ -17,18 +17,14 @@ module Fixtures
         session = ViewData::PG::Session.build
 
         context "Insert #{value.inspect}" do
-          insert_proc = proc {
-            session.execute(
-              %{INSERT INTO all_data_types (id, #{column}) VALUES ($1, $2)},
-              [id, value]
-            )
-          }
-
           error_class = self.error_class
 
           test "Insert statement raises #{error_class}" do
-            assert insert_proc do
-              raises_error?(error_class)
+            assert_raises error_class do
+              session.execute(
+                %{INSERT INTO all_data_types (id, #{column}) VALUES ($1, $2)},
+                [id, value]
+              )
             end
           end
         end
