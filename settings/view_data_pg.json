@@ -1,9 +1,9 @@
 {
-  "dbname": "message_store",
+  "dbname": "view_data",
   "host": "localhost",
   "hostaddr": "127.0.0.1",
   "port": 5432,
-  "user": "message_store",
+  "user": "view_data",
   "password": null,
   "connectTimeout": null,
   "options": null,
