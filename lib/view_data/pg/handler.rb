@@ -28,7 +28,7 @@ module ViewData
         columns = pkey_columns + data_columns
 
         quoted_columns = columns.map do |column|
-          double_quote(column)
+          quote_columns(column)
         end
 
         values = pkey_values + data_values
@@ -38,7 +38,7 @@ module ViewData
         end
 
         statement = <<~SQL.chomp
-          INSERT INTO #{double_quote(table_name)} (#{quoted_columns * ', '})
+          INSERT INTO #{quote_table_name(table_name)} (#{quoted_columns * ', '})
           VALUES (#{values_clause * ', '})
         SQL
 
@@ -69,7 +69,7 @@ module ViewData
         data_values = update.data.values
 
         set_clause = data_columns.map.with_index do |column, index|
-          quoted_column = double_quote(column)
+          quoted_column = quote_columns(column)
 
           reference = index + 1
 
@@ -77,7 +77,7 @@ module ViewData
         end
 
         pkey_clause = pkey_columns.map.with_index do |column, index|
-          quoted_column = double_quote(column)
+          quoted_column = quote_columns(column)
 
           reference = index + data_columns.count + 1
 
@@ -87,7 +87,7 @@ module ViewData
         values = data_values + pkey_values
 
         statement = <<~SQL.chomp
-          UPDATE #{double_quote(table_name)}
+          UPDATE #{quote_table_name(table_name)}
           SET #{set_clause * ', '}
           WHERE #{pkey_clause * ' AND '}
         SQL
@@ -112,7 +112,7 @@ module ViewData
         pkey_values = Array(delete.identifier)
 
         pkey_clause = pkey_columns.map.with_index do |column, index|
-          quoted_column = double_quote(column)
+          quoted_column = quote_columns(column)
 
           reference = index + 1
 
@@ -120,7 +120,7 @@ module ViewData
         end
 
         statement = <<~SQL.chomp
-          DELETE FROM #{double_quote(table_name)}
+          DELETE FROM #{quote_table_name(table_name)}
           WHERE #{pkey_clause * ' AND '}
         SQL
 
@@ -135,8 +135,12 @@ module ViewData
         logger.info(tag: :data) { pkey_values.pretty_inspect }
       end
 
-      def double_quote(text)
-        "\"#{text}\""
+      def quote_columns(column)
+        session.connect.quote_ident(column.to_s)
+      end
+
+      def quote_table_name(name)
+        session.connect.quote_ident(name.to_s.split('.'))
       end
     end
   end
