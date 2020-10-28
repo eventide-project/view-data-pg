@@ -28,7 +28,7 @@ module ViewData
         columns = pkey_columns + data_columns
 
         quoted_columns = columns.map do |column|
-          quote_columns(column)
+          quote_column(column)
         end
 
         values = pkey_values + data_values
@@ -69,7 +69,7 @@ module ViewData
         data_values = update.data.values
 
         set_clause = data_columns.map.with_index do |column, index|
-          quoted_column = quote_columns(column)
+          quoted_column = quote_column(column)
 
           reference = index + 1
 
@@ -77,7 +77,7 @@ module ViewData
         end
 
         pkey_clause = pkey_columns.map.with_index do |column, index|
-          quoted_column = quote_columns(column)
+          quoted_column = quote_column(column)
 
           reference = index + data_columns.count + 1
 
@@ -112,7 +112,7 @@ module ViewData
         pkey_values = Array(delete.identifier)
 
         pkey_clause = pkey_columns.map.with_index do |column, index|
-          quoted_column = quote_columns(column)
+          quoted_column = quote_column(column)
 
           reference = index + 1
 
@@ -135,7 +135,7 @@ module ViewData
         logger.info(tag: :data) { pkey_values.pretty_inspect }
       end
 
-      def quote_columns(column)
+      def quote_column(column)
         session.connect.quote_ident(column.to_s)
       end
 
