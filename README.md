@@ -14,7 +14,7 @@ This library facilitates that in a simple, safe, and idempotent way, by providin
 
 ## Usage
 
-View data is a specialized form of component. As such, it is constructed and run in the same as any other component. Three commands are provided, which include a consistent API for interacting with your persistent view data store:
+View data is a specialized form of component. As such, it is constructed and run in the same way as any other component. Three commands are provided, which include a consistent API for interacting with your persistent view data store:
 
  - `ViewData::Commands::Create`
  - `ViewData::Commands::Update`
